@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include easy_ecom_integration *.css
+recursive-include easy_ecom_integration *.csv
+recursive-include easy_ecom_integration *.html
+recursive-include easy_ecom_integration *.ico
+recursive-include easy_ecom_integration *.js
+recursive-include easy_ecom_integration *.json
+recursive-include easy_ecom_integration *.md
+recursive-include easy_ecom_integration *.png
+recursive-include easy_ecom_integration *.py
+recursive-include easy_ecom_integration *.svg
+recursive-include easy_ecom_integration *.txt
+recursive-exclude easy_ecom_integration *.pyc
