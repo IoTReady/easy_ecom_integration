@@ -113,23 +113,23 @@ app_license = "MIT"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"easy_ecom_integration.tasks.all"
-# 	],
-# 	"daily": [
-# 		"easy_ecom_integration.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"easy_ecom_integration.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"easy_ecom_integration.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"easy_ecom_integration.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	# "all": [
+	# 	"easy_ecom_integration.tasks.all"
+	# ],
+	"daily": [
+		"easy_ecom_integration.tasks.daily"
+	],
+	# "hourly": [
+	# 	"easy_ecom_integration.tasks.hourly"
+	# ],
+	# "weekly": [
+	# 	"easy_ecom_integration.tasks.weekly"
+	# ],
+	# "monthly": [
+	# 	"easy_ecom_integration.tasks.monthly"
+	# ],
+}
 
 # Testing
 # -------
