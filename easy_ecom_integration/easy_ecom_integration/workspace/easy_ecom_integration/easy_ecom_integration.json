@@ -1,0 +1,36 @@
+{
+ "charts": [],
+ "content": "[]",
+ "creation": "2022-10-09 13:00:42.986716",
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "hide_custom": 0,
+ "icon": "change",
+ "idx": 0,
+ "label": "Easy Ecom Integration",
+ "links": [],
+ "modified": "2022-10-09 13:08:40.146236",
+ "modified_by": "Administrator",
+ "module": "Easy Ecom Integration",
+ "name": "Easy Ecom Integration",
+ "owner": "Administrator",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 25.0,
+ "shortcuts": [
+  {
+   "doc_view": "List",
+   "label": "SKU Mapping",
+   "link_to": "Easy Ecom SKU Mapping",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Configuration",
+   "link_to": "Easy Ecom Configuration",
+   "type": "DocType"
+  }
+ ],
+ "title": "Easy Ecom Integration"
+}
