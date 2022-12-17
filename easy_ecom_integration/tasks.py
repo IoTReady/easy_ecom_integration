@@ -25,6 +25,8 @@ def authorize_easy_ecom():
 
 def get_orders(since=None, until=None, limit=250, next_url=None):
     ee_api_base_url = frappe.db.get_value("Easy Ecom Configuration", "Easy Ecom Configuration", "api_base_url")
+    if ee_api_base_url[-1] == '/':
+        ee_api_base_url = ee_api_base_url[:-1]
     if next_url:
         url = f"{ee_api_base_url}{next_url}"
     else:
@@ -36,6 +38,7 @@ def get_orders(since=None, until=None, limit=250, next_url=None):
         until = until.isoformat().replace('T', ' ')
         api_token = authorize_easy_ecom()
         url = f"{ee_api_base_url}/orders/V2/getAllOrders?api_token={api_token}&start_date={since}&end_date={until}&limit={limit}"
+        print(url)
     headers = {
         'Content-Type': 'application/json',
     }
@@ -77,21 +80,41 @@ def create_stock_entry():
     items = get_item_count()
     source_warehouse = config.source_warehouse
     target_warehouse = config.target_warehouse
-    doc = frappe.get_doc({'doctype': 'Stock Entry'})
-    doc.stock_entry_type = config.stock_entry_type
+    stock_entry = frappe.new_doc('Stock Entry')
+    stock_entry.stock_entry_type = config.stock_entry_type
+    to_store = {}
     for item in items:
-        row = doc.append('items', {})
+        is_stock_item = frappe.db.get_value("Item", item, "is_stock_item")
+        if is_stock_item:
+            if item in to_store:
+                to_store[item] += items[item]
+            else:
+                to_store[item] = items[item]
+        else:
+            # check if bundle
+            if frappe.db.exists("Product Bundle", item):
+                doc = frappe.get_doc("Product Bundle", item)
+                for child_item in doc.items:
+                    child_item_code = child_item.item_code
+                    child_item_quantity = items[item] * child_item.qty
+                    is_stock_item = frappe.db.get_value("Item", child_item_code, "is_stock_item")
+                    if is_stock_item:
+                        if child_item_code in to_store:
+                            to_store[child_item_code] += child_item_quantity
+                        else:
+                            to_store[child_item_code] = child_item_quantity
+    for item in to_store:
+        row = stock_entry.append('items', {})
         row.s_warehouse = source_warehouse
         row.t_warehouse = target_warehouse
         row.item_code = item
         row.allow_zero_valuation_rate = 1
-        row.qty = items[item]
-    doc.save()
+        row.qty = to_store[item]
+    stock_entry.save()
     frappe.db.commit()
+    return stock_entry
 
 
 def daily():
     create_stock_entry()
-
-
 
