@@ -1,36 +1,54 @@
 {
  "charts": [],
- "content": "[]",
+ "content": "[{\"type\":\"card\",\"data\":{\"card_name\":\"Configuration\",\"col\":4}}]",
  "creation": "2022-10-09 13:00:42.986716",
  "docstatus": 0,
  "doctype": "Workspace",
+ "for_user": "",
  "hide_custom": 0,
  "icon": "change",
  "idx": 0,
  "label": "Easy Ecom Integration",
- "links": [],
- "modified": "2022-10-09 13:08:40.146236",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Configuration",
+   "link_count": 2,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Easy Ecom Configuration",
+   "link_count": 0,
+   "link_to": "Easy Ecom Configuration",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "SKU Mapping",
+   "link_count": 0,
+   "link_to": "Easy Ecom SKU Mapping",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2022-12-17 15:07:11.121339",
  "modified_by": "Administrator",
  "module": "Easy Ecom Integration",
  "name": "Easy Ecom Integration",
  "owner": "Administrator",
+ "parent_page": "",
  "public": 1,
  "quick_lists": [],
  "roles": [],
  "sequence_id": 25.0,
- "shortcuts": [
-  {
-   "doc_view": "List",
-   "label": "SKU Mapping",
-   "link_to": "Easy Ecom SKU Mapping",
-   "type": "DocType"
-  },
-  {
-   "doc_view": "List",
-   "label": "Configuration",
-   "link_to": "Easy Ecom Configuration",
-   "type": "DocType"
-  }
- ],
+ "shortcuts": [],
  "title": "Easy Ecom Integration"
 }
