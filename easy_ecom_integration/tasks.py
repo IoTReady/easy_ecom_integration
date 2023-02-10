@@ -9,8 +9,9 @@ def authorize_easy_ecom():
     config = frappe.get_doc('Easy Ecom Configuration', '')
     email = config.email
     password = frappe.utils.password.get_decrypted_password("Easy Ecom Configuration", "Easy Ecom Configuration", fieldname="password")
-    import requests
-    url = "https://app.easyecom.io/getApiToken"
+    if config.api_base_url.endswith("/"):
+        config.api_base_url = config.api_base_url[:-1]
+    url = f"{config.api_base_url}/getApiToken"
     payload = json.dumps({
         "email": email,
         "password": password

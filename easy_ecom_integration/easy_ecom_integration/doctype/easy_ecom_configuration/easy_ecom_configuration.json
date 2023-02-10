@@ -16,6 +16,8 @@
  ],
  "fields": [
   {
+   "default": "https://api.easyecom.io",
+   "description": "You can find this here: https://api-docs.easyecom.io/",
    "fieldname": "api_base_url",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -41,6 +43,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "description": "Stock will be moved from this warehouse",
    "fieldname": "source_warehouse",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -49,6 +52,7 @@
    "reqd": 1
   },
   {
+   "description": "Into this warehouse",
    "fieldname": "target_warehouse",
    "fieldtype": "Link",
    "label": "Target Warehouse",
@@ -66,7 +70,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-10-09 10:36:40.689663",
+ "modified": "2023-02-10 15:31:59.000815",
  "modified_by": "Administrator",
  "module": "Easy Ecom Integration",
  "name": "Easy Ecom Configuration",
