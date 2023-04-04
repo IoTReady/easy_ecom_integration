@@ -19,7 +19,9 @@ def authorize_easy_ecom():
     headers = {
         'Content-Type': 'application/json',
     }
-    response = requests.post(url, headers=headers, data=payload).json()
+    response = requests.post(url, headers=headers, data=payload)
+    print("response", response.text)
+    response = response.json()
     api_token = response['data']['api_token']
     redis.set('ee_api_token', api_token)
     return api_token
@@ -58,8 +60,8 @@ def get_all_orders():
     return orders
 
 def get_item_count():
-    orders = get_all_orders()
     items = {}
+    orders = get_all_orders()
     for order in orders:
         for suborder in order['suborders']:
             try:
@@ -71,14 +73,15 @@ def get_item_count():
                         items[item] += quantity
                     else:
                         items[item] = quantity
+                else:
+                    print(f"Mapping not found for SKU {sku}")
             except Exception as e:
                 print(str(e))
     return items
 
 
-def create_stock_entry():
+def create_stock_entry(items):
     config = frappe.get_doc('Easy Ecom Configuration', '')
-    items = get_item_count()
     source_warehouse = config.source_warehouse
     target_warehouse = config.target_warehouse
     stock_entry = frappe.new_doc('Stock Entry')
@@ -115,7 +118,32 @@ def create_stock_entry():
     frappe.db.commit()
     return stock_entry
 
+def create_sales_order(items):
+    """Create Sales Order from Easy Ecom Orders. Orders are created against customer_for_sales_order from Easy Ecom Configuration"""
+    config = frappe.get_single('Easy Ecom Configuration')
+    customer = config.customer_for_sales_order
+    sales_order = frappe.new_doc('Sales Order')
+    sales_order.customer = customer
+    # insert items from Easy Ecom Orders
+    for item in items:
+        row = sales_order.append('items', {})
+        row.item_code = item
+        row.qty = items[item]
+    sales_order.delivery_date = datetime.today()
+    sales_order.save()
+    frappe.db.commit()
+    return sales_order
 
 def daily():
-    create_stock_entry()
+    """Create Stock Entry and Sales Order from Easy Ecom Orders"""
+    config = frappe.get_single('Easy Ecom Configuration')
+    if not (config.should_create_stock_entry or config.should_create_sales_order):
+        return
+    items = get_item_count()
+    if not items:
+        return
+    if config.should_create_stock_entry:
+        create_stock_entry(items)
+    if config.should_create_sales_order:
+        create_sales_order(items)
 

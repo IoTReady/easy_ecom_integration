@@ -10,9 +10,13 @@
   "email",
   "password",
   "column_break_4",
+  "should_create_stock_entry",
+  "stock_entry_type",
   "source_warehouse",
   "target_warehouse",
-  "stock_entry_type"
+  "sales_order_column",
+  "should_create_sales_order",
+  "customer_for_sales_order"
  ],
  "fields": [
   {
@@ -40,37 +44,70 @@
   },
   {
    "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
+   "fieldtype": "Column Break",
+   "label": "Stock Entry"
   },
   {
+   "depends_on": "eval: doc.should_create_stock_entry;",
    "description": "Stock will be moved from this warehouse",
    "fieldname": "source_warehouse",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Source Warehouse",
-   "options": "Warehouse",
-   "reqd": 1
+   "mandatory_depends_on": "eval: doc.should_create_stock_entry;",
+   "options": "Warehouse"
   },
   {
+   "depends_on": "eval: doc.should_create_stock_entry;",
    "description": "Into this warehouse",
    "fieldname": "target_warehouse",
    "fieldtype": "Link",
    "label": "Target Warehouse",
-   "options": "Warehouse",
-   "reqd": 1
+   "mandatory_depends_on": "eval: doc.should_create_stock_entry;",
+   "options": "Warehouse"
   },
   {
+   "depends_on": "eval: doc.should_create_stock_entry;",
    "fieldname": "stock_entry_type",
    "fieldtype": "Link",
    "label": "Stock Entry Type",
-   "options": "Stock Entry Type",
+   "mandatory_depends_on": "eval: doc.should_create_stock_entry;",
+   "options": "Stock Entry Type"
+  },
+  {
+   "default": "0",
+   "description": "A single sales order will be created each day against the customer below.",
+   "fieldname": "should_create_sales_order",
+   "fieldtype": "Check",
+   "label": "Create Sales Order?",
    "reqd": 1
+  },
+  {
+   "depends_on": "eval: doc.should_create_sales_order;",
+   "fieldname": "customer_for_sales_order",
+   "fieldtype": "Link",
+   "label": "Customer For Sales Order",
+   "mandatory_depends_on": "eval: doc.should_create_sales_order;",
+   "options": "Customer"
+  },
+  {
+   "default": "1",
+   "description": "A single stock entry will be created each day using the details below.",
+   "fieldname": "should_create_stock_entry",
+   "fieldtype": "Check",
+   "label": "Create Stock Entry?",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sales_order_column",
+   "fieldtype": "Column Break",
+   "label": "Sales Order"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-02-10 15:31:59.000815",
+ "modified": "2023-04-04 20:56:17.522785",
  "modified_by": "Administrator",
  "module": "Easy Ecom Integration",
  "name": "Easy Ecom Configuration",
