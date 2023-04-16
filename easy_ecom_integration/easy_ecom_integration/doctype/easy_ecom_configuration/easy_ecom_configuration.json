@@ -15,7 +15,7 @@
   "source_warehouse",
   "target_warehouse",
   "sales_order_column",
-  "should_create_sales_order",
+  "sales_order_mode",
   "customer_for_sales_order"
  ],
  "fields": [
@@ -75,19 +75,11 @@
    "options": "Stock Entry Type"
   },
   {
-   "default": "0",
-   "description": "A single sales order will be created each day against the customer below.",
-   "fieldname": "should_create_sales_order",
-   "fieldtype": "Check",
-   "label": "Create Sales Order?",
-   "reqd": 1
-  },
-  {
-   "depends_on": "eval: doc.should_create_sales_order;",
+   "depends_on": "eval: doc.sales_order_mode !== 'None';",
    "fieldname": "customer_for_sales_order",
    "fieldtype": "Link",
    "label": "Customer For Sales Order",
-   "mandatory_depends_on": "eval: doc.should_create_sales_order;",
+   "mandatory_depends_on": "eval: doc.sales_order_mode !== 'None';",
    "options": "Customer"
   },
   {
@@ -102,12 +94,20 @@
    "fieldname": "sales_order_column",
    "fieldtype": "Column Break",
    "label": "Sales Order"
+  },
+  {
+   "default": "None",
+   "description": "Select `Combined` to combine all Easy Ecom orders into a single ERPNext `Sales Order` or `Separate` to create one ERPNext `Sales Order` for each Easy Ecom order.",
+   "fieldname": "sales_order_mode",
+   "fieldtype": "Select",
+   "label": "Sales Order Mode",
+   "options": "None\nCombined\nSeparate"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2023-04-04 20:56:17.522785",
+ "modified": "2023-04-16 13:48:28.141551",
  "modified_by": "Administrator",
  "module": "Easy Ecom Integration",
  "name": "Easy Ecom Configuration",
